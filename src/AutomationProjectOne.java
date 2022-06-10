@@ -2,6 +2,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 
@@ -33,15 +34,17 @@ public class AutomationProjectOne {
 
 
             driver.findElement(By.id("hideLogin")).click();
-            driver.findElement(By.id("username")).sendKeys("JSMITH00");
+            driver.findElement(By.id("username")).sendKeys("JSMITH9");
             driver.findElement(By.id("firstName")).sendKeys("John");
             driver.findElement(By.id("lastName")).sendKeys("Smith");
-            driver.findElement(By.id("email")).sendKeys("jsmith00@duotech.io");
-            driver.findElement(By.id("email2")).sendKeys("jsmith00@duotech.io");
+            driver.findElement(By.id("email")).sendKeys("jsmith9@duotech.io");
+            driver.findElement(By.id("email2")).sendKeys("jsmith9@duotech.io");
             driver.findElement(By.id("password")).sendKeys("duojohnsmithtech");
             driver.findElement(By.id("password2")).sendKeys("duojohnsmithtech");
-            String firstName = driver.findElement(By.name("firstName")).getText();
-            String lastName = driver.findElement(By.name("lastName")).getText();
+            WebElement fname= driver.findElement(By.id("firstName"));
+            WebElement lname= driver.findElement(By.id("lastName"));
+            String firstName = fname.getAttribute("value");
+            String lastName = lname.getAttribute("value");
 
 
             driver.findElement(By.name("registerButton")).click();
@@ -51,15 +54,19 @@ public class AutomationProjectOne {
             String expectedRegisterLink = "http://qa-duotify.us-east-2.elasticbeanstalk.com/browse.php?";
             Assert.assertEquals(actualRegisterLink,expectedRegisterLink);
 
-
-            String actualname = driver.findElement(By.id("nameFirstAndLast")).getText();
-            String expectedName = "John Smith";
-            Assert.assertEquals(actualname,expectedName);
+            Thread.sleep(2000);
             driver.findElement(By.id("nameFirstAndLast")).click();
             Thread.sleep(2000);
 
+
+            String actualname = driver.findElement(By.id("nameFirstAndLast")).getText();
+            String expectedName = firstName + " " + lastName;
+            Assert.assertEquals(actualname,expectedName);
+
+            Thread.sleep(2000);
+
             String currentUser = driver.findElement(By.tagName("h1")).getText();
-            String expectedUser = "John Smith";
+            String expectedUser = firstName + " " + lastName;
             Assert.assertEquals(currentUser,expectedUser);
 
             driver.findElement(By.id("rafael")).click();
@@ -72,7 +79,7 @@ public class AutomationProjectOne {
 
             Thread.sleep(2000);
 
-            driver.findElement(By.id("loginUsername")).sendKeys("JSMITH00");
+            driver.findElement(By.id("loginUsername")).sendKeys("JSMITH9");
             driver.findElement(By.id("loginPassword")).sendKeys("duojohnsmithtech");
             driver.findElement(By.name("loginButton")).click();
 
